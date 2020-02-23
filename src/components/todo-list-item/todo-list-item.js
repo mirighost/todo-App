@@ -2,34 +2,67 @@ import React, { Component } from 'react';
 import './todo-list-item.css'
 
 export default class TodoListItem extends Component {
-    
+
+    // states
+    state = {
+        done: false,
+        important: false
+    }
+
+    // line to list function
+    onLabelClick = () => {
+        this.setState(({ done }) => {
+            return {
+                done: !done
+            };
+        });
+    };
+
+    // important function
+    onMarkImportant = () => {
+        this.setState(({ important }) => {
+            return {
+                important: !important
+            };
+        });
+    };
+
     render() {
 
-        const { label, important = false } = this.props
+        const { label, onDeleted } = this.props; // props
+        const { done, important } = this.state;
 
-        const style = {
-            color: important ? 'tomato' : 'black',
-            fontWeight: important ? 'bold' : 'normal'
+        let classNames = 'todo-list-item';
+
+        if (done) {
+            classNames += ' done';
+        };
+        if (important) {
+            classNames += ' important'
         };
 
         return (
-            <span className="todo-list-item">
+            <span className={classNames}>
+
+                {/* lists */}
                 <span
                     className="todo-list-item-label"
-                    style={style}>
+                    onClick={this.onLabelClick} >
                     {label}
                 </span>
 
-                <button type="button"
+                {/* buttons */}
+                <button onClick={this.onMarkImportant} type="button"
                     className="btn btn-outline-success btn-sm float-right right-button">
                     <i className="fa fa-exclamation" />
                 </button>
 
-                <button type="button"
+                <button onClick={onDeleted}
+                    type="button"
                     className="btn btn-outline-danger btn-sm float-right left-button">
                     <i className="fa fa-trash-o" />
                 </button>
             </span>
         );
-    }
-}
+    };
+};
