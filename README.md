@@ -1,4 +1,5 @@
 # todo-App
+
 Simple app with React
 
-*First Application with React
+\*First Application with React
